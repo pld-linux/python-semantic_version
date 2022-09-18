@@ -11,7 +11,7 @@ Summary:	A library implementing the 'SemVer' scheme
 Summary(pl.UTF-8):	Biblioteka implementująca schemat "SemVer"
 Name:		python-%{module}
 Version:	2.10.0
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/semantic-version/
@@ -22,6 +22,7 @@ URL:		https://pypi.org/project/semantic-version/
 BuildRequires:	python-modules >= 1:2.7
 BuildRequires:	python-setuptools
 %if %{with nose}
+BuildRequires:	python-django >= 1.11
 BuildRequires:	python-nose
 %endif
 %endif
@@ -29,6 +30,7 @@ BuildRequires:	python-nose
 BuildRequires:	python3-modules >= 1:3.4
 BuildRequires:	python3-setuptools
 %if %{with nose}
+BuildRequires:	python3-django >= 2.2
 BuildRequires:	python3-nose
 %endif
 %endif
@@ -84,7 +86,7 @@ Dokumentacja API modułu Pythona semantic_version.
 
 %if %{with tests}
 PYTHONPATH=$(pwd) \
-nosetests-%{py_ver} tests
+nosetests-%{py_ver} tests/test_*.py
 %endif
 %endif
 
@@ -93,7 +95,7 @@ nosetests-%{py_ver} tests
 
 %if %{with tests}
 PYTHONPATH=$(pwd) \
-nosetests-%{py3_ver} tests
+nosetests-%{py3_ver} tests/test_*.py
 %endif
 %endif
 
