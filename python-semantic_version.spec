@@ -11,7 +11,7 @@ Summary:	A library implementing the 'SemVer' scheme
 Summary(pl.UTF-8):	Biblioteka implementująca schemat "SemVer"
 Name:		python-%{module}
 Version:	2.10.0
-Release:	3
+Release:	4
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/semantic-version/
