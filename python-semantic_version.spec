@@ -1,5 +1,3 @@
-# TODO: run tests using nose2 instead of nose (following upstream)
-#
 # Conditional build:
 %bcond_without	doc	# Sphinx documentation
 %bcond_without	tests	# unit tests
@@ -11,7 +9,7 @@ Summary:	A library implementing the 'SemVer' scheme
 Summary(pl.UTF-8):	Biblioteka implementująca schemat "SemVer"
 Name:		python-%{module}
 Version:	2.10.0
-Release:	4
+Release:	5
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/semantic-version/
@@ -21,18 +19,10 @@ URL:		https://pypi.org/project/semantic-version/
 %if %{with python2}
 BuildRequires:	python-modules >= 1:2.7
 BuildRequires:	python-setuptools
-%if %{with nose}
-BuildRequires:	python-django >= 1.11
-BuildRequires:	python-nose
-%endif
 %endif
 %if %{with python3}
 BuildRequires:	python3-modules >= 1:3.4
 BuildRequires:	python3-setuptools
-%if %{with nose}
-BuildRequires:	python3-django >= 2.2
-BuildRequires:	python3-nose
-%endif
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
@@ -85,8 +75,10 @@ Dokumentacja API modułu Pythona semantic_version.
 %py_build
 
 %if %{with tests}
-PYTHONPATH=$(pwd) \
-nosetests-%{py_ver} tests/test_*.py
+# use explicit plugins list for reliable builds (delete PYTEST_PLUGINS if empty)
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+PYTEST_PLUGINS= \
+%{__python} -m pytest tests
 %endif
 %endif
 
@@ -94,8 +86,10 @@ nosetests-%{py_ver} tests/test_*.py
 %py3_build
 
 %if %{with tests}
-PYTHONPATH=$(pwd) \
-nosetests-%{py3_ver} tests/test_*.py
+# use explicit plugins list for reliable builds (delete PYTEST_PLUGINS if empty)
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+PYTEST_PLUGINS= \
+%{__python3} -m pytest tests
 %endif
 %endif
 
